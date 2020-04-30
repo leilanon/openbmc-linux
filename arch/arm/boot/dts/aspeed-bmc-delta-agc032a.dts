@@ -12,19 +12,21 @@
 	aliases {
 		/*
 		 * I2C switch 2-0075, pca9548, total 8 child channels
-		 * assigned bus number 8-15.
+		 * assigned bus number 14-21.
 		 */
-		i2c8 = &imux8;
-		i2c9 = &imux9;
-		i2c10 = &imux10;
-		i2c11 = &imux11;
-		i2c12 = &imux12;
-		i2c13 = &imux13;
 		i2c14 = &imux14;
 		i2c15 = &imux15;
+		i2c16 = &imux16;
+		i2c17 = &imux17;
+		i2c18 = &imux18;
+		i2c19 = &imux19;
+		i2c20 = &imux20;
+		i2c21 = &imux21;
 
 		spi1 = &spi1;
 		spi2 = &spi_gpio;
+
+		serial0 = &uart1;
 		serial4 = &uart5;
 	};
 
@@ -111,6 +113,17 @@
 		     &pinctrl_rxd4_default>;
 };
 
+&uart5 {
+	status = "okay";
+};
+
+&mac1 {
+	status = "okay";
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
+};
+
 &i2c0 {
 	status = "okay";
 	multi-master;
@@ -131,49 +144,49 @@
 		#size-cells = <0>;
 		reg = <0x75>;
 
-		imux8: i2c@0 {
+		imux14: i2c@0 {
 			#address-cells = <1>;
 			#size-cells = <0>;
 			reg = <0>;
 		};
 
-		imux9: i2c@1 {
+		imux15: i2c@1 {
 			#address-cells = <1>;
 			#size-cells = <0>;
 			reg = <1>;
 		};
 
-		imux10: i2c@2 {
+		imux16: i2c@2 {
 			#address-cells = <1>;
 			#size-cells = <0>;
 			reg = <2>;
 		};
 
-		imux11: i2c@3 {
+		imux17: i2c@3 {
 			#address-cells = <1>;
 			#size-cells = <0>;
 			reg = <3>;
 		};
 
-		imux12: i2c@4 {
+		imux18: i2c@4 {
 			#address-cells = <1>;
 			#size-cells = <0>;
 			reg = <4>;
 		};
 
-		imux13: i2c@5 {
+		imux19: i2c@5 {
 			#address-cells = <1>;
 			#size-cells = <0>;
 			reg = <5>;
 		};
 
-		imux14: i2c@6 {
+		imux20: i2c@6 {
 			#address-cells = <1>;
 			#size-cells = <0>;
 			reg = <6>;
 		};
 
-		imux15: i2c@7 {
+		imux21: i2c@7 {
 			#address-cells = <1>;
 			#size-cells = <0>;
 			reg = <7>;
