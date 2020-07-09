@@ -2,14 +2,18 @@
 // Delta Electronic, Inc.
 /dts-v1/;
 
+#include "aspeed-g5.dtsi"
 #include <dt-bindings/gpio/aspeed-gpio.h>
-#include "facebook-netbmc-ast2500-common.dtsi"
+// #include "facebook-netbmc-ast2500-common.dtsi"
 
 / {
 	model = "DELTA AGC032A BMC";
 	compatible = "delta,agc032a-bmc", "aspeed,ast2500";
 
 	aliases {
+		serial0 = &uart1;
+		serial4 = &uart5;
+
 		/*
 		 * I2C switch 2-0075, pca9548, total 8 child channels
 		 * assigned bus number 14-21.
@@ -25,20 +29,23 @@
 
 		spi1 = &spi1;
 		spi2 = &spi_gpio;
-
-		serial0 = &uart1;
-		serial4 = &uart5;
 	};
 
 	chosen {
 		stdout-path = &uart5;
-		bootargs = "console=ttyS4,115200n8 root=/dev/ram rw";
+		bootargs = "console=ttyS4,115200n8 earlyprintk";
+	};
+
+	memory@80000000 {
+		reg = <0x80000000 0x20000000>;
 	};
 
 	ast-adc-hwmon {
 		compatible = "iio-hwmon";
 		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-			      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
+			      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
+				  <&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
+			      <&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
 	};
 
 	spi_gpio: spi-gpio {
@@ -53,11 +60,6 @@
 		num-chipselects = <1>;
 		cs-gpios = <&gpio ASPEED_GPIO(R, 2) GPIO_ACTIVE_LOW>;
 
-		tpmdev@0 {
-			compatible = "tcg,tpm_tis-spi";
-			spi-max-frequency = <33000000>;
-			reg = <0>;
-		};
 	};
 };
 
@@ -99,15 +101,65 @@
 	};
 };
 
-&uart4 {
+&spi1 {
 	status = "okay";
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_txd4_default
-		     &pinctrl_rxd4_default>;
+	pinctrl-0 = <&pinctrl_spi1_default>;
+	flash@0 {
+		status = "okay";
+		m25p,fast-read;
+		label = "pnor";
+	};
+};
+
+&lpc_snoop {
+	status = "okay";
+	snoop-ports = <0x80>;
+};
+
+&lpc_ctrl {
+	// Enable lpc clock
+	status = "okay";
+};
+
+&vuart {
+	// VUART Host Console
+	status = "okay";
+};
+
+&uart1 {
+	// Host Console
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_txd1_default
+		     &pinctrl_rxd1_default>;
+};
+
+&uart2 {
+	// SoL Host Console
+	status = "okay";
+};
+
+&uart3 {
+	// SoL BMC Console
+	status = "okay";
 };
 
 &uart5 {
+	// BMC Console
 	status = "okay";
+};
+
+&kcs2 {
+	// BMC KCS channel 2
+	status = "okay";
+	kcs_addr = <0xca8>;
+};
+
+&kcs3 {
+	// BMC KCS channel 3
+	status = "okay";
+	kcs_addr = <0xca2>;
 };
 
 &mac1 {
@@ -115,7 +167,19 @@
 
 	use-ncsi;
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_rmii1_default>;
+	pinctrl-0 = <&pinctrl_rmii2_default>;
+};
+
+&adc {
+	status = "okay";
+};
+
+&jtag {
+	status = "okay";
+};
+
+&vhub {
+	status = "okay";
 };
 
 &i2c0 {
@@ -188,7 +252,6 @@
 	};
 };
 
-
 &i2c3 {
 	status = "okay";
 
@@ -229,35 +292,4 @@
 
 &i2c7 {
 	status = "okay";
-};
-
-&adc {
-	status = "okay";
-};
-
-&ehci1 {
-	status = "okay";
-};
-
-&uhci {
-	status = "okay";
-};
-
-&sdhci1 {
-	aspeed,sdhci-disable-dma;
-};
-
-&jtag {
-	status = "okay";
-};
-
-&spi1 {
-	status = "okay";
-	compatible = "aspeed,ast2500-spi-master";
-
-	spidev@0 {
-		compatible = "rohm,dh2228fv";
-		spi-max-frequency = <8250000>;
-		reg = <0>;
-	};
 };
