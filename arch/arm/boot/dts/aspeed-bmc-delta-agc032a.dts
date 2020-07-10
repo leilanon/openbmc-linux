@@ -134,6 +134,13 @@
 	status = "okay";
 };
 
+&uart4 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_txd4_default
+		     &pinctrl_rxd4_default>;
+};
+
 &uart5 {
 	// BMC Console
 	status = "okay";
