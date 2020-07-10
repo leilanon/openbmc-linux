@@ -37,7 +37,7 @@
 	};
 
 	memory@80000000 {
-		reg = <0x80000000 0x20000000>;
+		reg = <0x80000000 0x40000000>;
 	};
 
 	ast-adc-hwmon {
@@ -101,14 +101,23 @@
 	};
 };
 
+&lpc_ctrl {
+	// Enable lpc clock
+	status = "okay";
+};
+
 &lpc_snoop {
 	status = "okay";
 	snoop-ports = <0x80>;
 };
 
-&lpc_ctrl {
-	// Enable lpc clock
+&wdt1 {
 	status = "okay";
+	aspeed,reset-type = "system";
+};
+
+&wdt2 {
+	status = "disabled";
 };
 
 &vuart {
@@ -124,14 +133,12 @@
 		     &pinctrl_rxd1_default>;
 };
 
-&uart2 {
-	// SoL Host Console
-	status = "okay";
-};
-
 &uart3 {
 	// SoL BMC Console
 	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_txd3_default
+		     &pinctrl_rxd3_default>;
 };
 
 &uart4 {
@@ -166,15 +173,27 @@
 	pinctrl-0 = <&pinctrl_rmii2_default>;
 };
 
+&rtc {
+	status = "okay";
+};
+
+&vhub {
+	status = "okay";
+};
+
+&sdmmc {
+       status = "okay";
+};
+
+&sdhci1 {
+       aspeed,sdhci-disable-dma;
+};
+
 &adc {
 	status = "okay";
 };
 
 &jtag {
-	status = "okay";
-};
-
-&vhub {
 	status = "okay";
 };
 
