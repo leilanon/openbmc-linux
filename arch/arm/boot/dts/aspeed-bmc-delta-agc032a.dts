@@ -38,7 +38,9 @@
 	ast-adc-hwmon {
 		compatible = "iio-hwmon";
 		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-			      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
+			      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
+				  <&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
+			      <&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
 	};
 
 	spi_gpio: spi-gpio {
@@ -52,12 +54,6 @@
 		gpio-miso = <&gpio ASPEED_GPIO(R, 5) GPIO_ACTIVE_HIGH>;
 		num-chipselects = <1>;
 		cs-gpios = <&gpio ASPEED_GPIO(R, 2) GPIO_ACTIVE_LOW>;
-
-		tpmdev@0 {
-			compatible = "tcg,tpm_tis-spi";
-			spi-max-frequency = <33000000>;
-			reg = <0>;
-		};
 	};
 };
 
@@ -260,4 +256,54 @@
 		spi-max-frequency = <8250000>;
 		reg = <0>;
 	};
+};
+&gpio {
+	pin_gpio_c0 {
+		gpios = <&gpio ASPEED_GPIO(C, 0) GPIO_ACTIVE_HIGH>;
+		output;
+		line-name = "GPIOC0_SMB_SCL10";
+	};
+
+	pin_gpio_c1 {
+		gpios = <&gpio ASPEED_GPIO(C, 1) GPIO_ACTIVE_HIGH>;
+		input;
+		line-name = "GPIOC1_SMB_SDA10";
+	};
+
+	pin_gpio_c2 {
+		gpios = <&gpio ASPEED_GPIO(C, 2) GPIO_ACTIVE_HIGH>;
+		input;
+		line-name = "GPIOC2_SMB_SCL11";
+	};
+
+	pin_gpio_c3 {
+		gpios = <&gpio ASPEED_GPIO(C, 3) GPIO_ACTIVE_HIGH>;
+		input;
+		line-name = "GPIOC3_SMB_SDA11";
+	};
+
+	pin_gpio_c4 {
+		gpios = <&gpio ASPEED_GPIO(C, 4) GPIO_ACTIVE_HIGH>;
+		input;
+		line-name = "GPIOC4_SMB_SCL12";
+	};
+
+	pin_gpio_c5 {
+		gpios = <&gpio ASPEED_GPIO(C, 5) GPIO_ACTIVE_HIGH>;
+		input;
+		line-name = "GPIOC5_SMB_SDA12";
+	};
+
+	pin_gpio_c6 {
+		gpios = <&gpio ASPEED_GPIO(C, 6) GPIO_ACTIVE_HIGH>;
+		input;
+		line-name = "GPIOC6_SMB_SCL13";
+	};
+
+	pin_gpio_c7 {
+		gpios = <&gpio ASPEED_GPIO(C, 7) GPIO_ACTIVE_HIGH>;
+		input;
+		line-name = "GPIOC7_SMB_SDA13";
+	};
+
 };
