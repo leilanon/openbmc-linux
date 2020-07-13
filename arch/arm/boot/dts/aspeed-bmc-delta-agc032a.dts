@@ -251,9 +251,6 @@
 	status = "okay";
 };
 
-&i2c14 {
-	status = "okay";
-};
 
 &adc {
 	status = "okay";
