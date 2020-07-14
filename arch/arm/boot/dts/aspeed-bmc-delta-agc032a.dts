@@ -38,7 +38,9 @@
 	ast-adc-hwmon {
 		compatible = "iio-hwmon";
 		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-			      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>;
+			      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
+				  <&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
+			      <&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
 	};
 
 	spi_gpio: spi-gpio {
@@ -52,12 +54,6 @@
 		gpio-miso = <&gpio ASPEED_GPIO(R, 5) GPIO_ACTIVE_HIGH>;
 		num-chipselects = <1>;
 		cs-gpios = <&gpio ASPEED_GPIO(R, 2) GPIO_ACTIVE_LOW>;
-
-		tpmdev@0 {
-			compatible = "tcg,tpm_tis-spi";
-			spi-max-frequency = <33000000>;
-			reg = <0>;
-		};
 	};
 };
 
@@ -115,7 +111,7 @@
 
 	use-ncsi;
 	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_rmii1_default>;
+	pinctrl-0 = <&pinctrl_rmii2_default>;
 };
 
 &i2c0 {
@@ -231,6 +227,31 @@
 	status = "okay";
 };
 
+&i2c8 {
+	status = "okay";
+};
+
+&i2c9 {
+	status = "okay";
+};
+
+&i2c10 {
+	status = "okay";
+};
+
+&i2c11 {
+	status = "okay";
+};
+
+&i2c12 {
+	status = "okay";
+};
+
+&i2c13 {
+	status = "okay";
+};
+
+
 &adc {
 	status = "okay";
 };
@@ -260,4 +281,17 @@
 		spi-max-frequency = <8250000>;
 		reg = <0>;
 	};
+};
+
+&kcs2 {
+	// BMC KCS channel 2
+	status = "okay";
+	kcs_addr = <0xca8>;
+};
+
+&kcs3 {
+	// BMC KCS channel 3
+	status = "okay";
+	kcs_addr = <0xca2>;
+
 };
