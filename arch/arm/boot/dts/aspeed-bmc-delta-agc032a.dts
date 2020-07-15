@@ -283,14 +283,14 @@
 
 &lpc_snoop {
 	status = "okay";
-	compatible = "aspeed,ast2500-lpc-snoop",
+	compatible = "aspeed,ast2500-lpc-snoop";
 	snoop-ports = <0x80>;
 };
 
 &lpc_ctrl {
 	// Enable lpc clock
 	status = "okay";
-	compatible = "aspeed,ast2500-lpc-ctrl",
+	compatible = "aspeed,ast2500-lpc-ctrl";
 };
 
 &kcs2 {
