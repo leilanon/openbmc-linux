@@ -283,6 +283,19 @@
 	};
 };
 
+&lpc_ctrl {
+	// Enable lpc clock
+	status = "okay";
+	compatible = "aspeed,ast2500-lpc-ctrl";
+};
+
+&lpc_snoop {
+	status = "okay";
+	compatible = "aspeed,ast2500-lpc-snoop";
+	snoop-ports = <0x80>;
+};
+
+
 &kcs2 {
 	// BMC KCS channel 2
 	status = "okay";
